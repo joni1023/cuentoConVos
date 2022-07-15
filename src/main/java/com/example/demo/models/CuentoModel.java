@@ -1,5 +1,7 @@
 package com.example.demo.models;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,12 +12,14 @@ public class CuentoModel {
     @Column(unique = true, nullable = false)
     private Long id;
     private String autor;
-    @Column(length = 500)
+    @Column(length = 800)
     private String cuerpo;
     private String titulo;
     private String imagen;
     @Column(length = 255)
     private String reseña;
+    @OneToMany(mappedBy = "cuento", cascade = { CascadeType.ALL })
+    private List<PuntosModel> puntos;
 
     public String getReseña() {
         return reseña;
@@ -45,10 +49,6 @@ public class CuentoModel {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getAutor() {
         return autor;
     }
@@ -63,6 +63,14 @@ public class CuentoModel {
 
     public void setCuerpo(String cuerpo) {
         this.cuerpo = cuerpo;
+    }
+
+    public List<PuntosModel> getPuntos() {
+        return puntos;
+    }
+
+    public void setPuntos(List<PuntosModel> puntos) {
+        this.puntos = puntos;
     }
 
 }

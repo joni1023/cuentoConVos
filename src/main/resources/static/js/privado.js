@@ -59,7 +59,7 @@ if (document.getElementById("app")) {
         </tbody>
       </table>
       <div v-if="deleted" class="alert alert-dark" role="alert">
-        A simple dark alert—check it out!
+        se elimino con exito
       </div>
           </div>
             `,
@@ -111,7 +111,7 @@ if (document.getElementById("app")) {
       created: {
         data: function () {
           return {
-            msj2: "dssds",
+            mostrarmsj: false,
             cuentonuevo: {
               titulo: "",
               cuerpo: "",
@@ -140,13 +140,13 @@ if (document.getElementById("app")) {
             <br />
           </div>
           <div class="mb-3">
-          <label for="Reseña" class="form-label">Reseña/label>
+          <label for="Reseña" class="form-label">Reseña</label>
           <input type ="text" class="form-control" v-model='cuentonuevo.reseña'></input>
             <br />
           </div>
           <div class="mb-3">
           <label for="Cuerpo" class="form-label">Cuerpo</label>
-          <textarea class="form-control" v-model='cuentonuevo.cuerpo' rows="7"></textarea>
+          <textarea class="form-control" v-model='cuentonuevo.cuerpo' rows="7" maxlength="800"></textarea>
             <br />
           </div>
           <div class='d-flex justify-content-end'>
@@ -158,28 +158,36 @@ if (document.getElementById("app")) {
           </button>
           </div>
         </form>
+          <div v-if="mostrarmsj" class="alert alert-primary py-2" role="alert">
+            Se creo correctaente!!
+          </div>
         </div>
           `,
         methods: {
           guardarCuento() {
             let url = "http://localhost:8080/cuentos";
-            var options = {
+            
+            if(this.cuentonuevo.cuerpo.length <= 800){
+              var options = {
               body: JSON.stringify(this.cuentonuevo),
               method: "POST",
               headers: { "Content-Type": "application/json" },
               // redirect: 'follow'
             };
+
             fetch(url, options)
               .then(function () {
-                console.log("creado");
-                alert("Grabado");
-
+                this.mostrarmsj=true;
+                
                 // Handle response we get from the API
               })
               .catch((err) => {
                 //this.errored = true
                 console.error(err);
               });
+              }else{
+                alert("cuerpo excede el limite")
+              }
           },
           cambiarVista(name) {
             localStorage.vista = name;

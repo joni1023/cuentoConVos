@@ -34,8 +34,12 @@ public class PuntosModel {
         return id;
     }
 
-    /*
-     * @ManyToOne(fetch = FetchType.LAZY, targetEntity = Cuento.class)
-     * private Cuento cuento_ref;
-     */
+    public CuentoModel getCuento() {
+        return cuento;
+    }
+
+    public void setCuento(CuentoModel cuento) {
+        this.cuento = cuento;
+    }
+
 }
